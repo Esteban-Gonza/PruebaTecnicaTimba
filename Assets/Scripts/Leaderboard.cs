@@ -11,13 +11,18 @@ public class Leaderboard : MonoBehaviour{
     // Public Key to leaderboard data base "https://danqzq.itch.io/leaderboard-creator"
     string publicLeaderboardKey = "403b65e47589a487f65bc7ba3e83ea55f39ad8bab86c424b4c9e9d8d40adbd50";
 
+    void Start(){
+        GetLeaderboard();
+    }
+
     public void GetLeaderboard(){
 
         // Get the data from the database with the public key
-        LeaderboardCreator.GetLeaderboard(publicLeaderboardKey, ((msg) =>
-        {
+        LeaderboardCreator.GetLeaderboard(publicLeaderboardKey, ((msg) =>{
+
+            int loopLenght = (msg.Length < names.Count) ? msg.Length : names.Count;
             //assign data to the ones on the Names and Score List
-            for (int i = 0; i < names.Count; i++)
+            for (int i = 0; i < loopLenght; i++)
             {
                 names[i].text = msg[i].Username;
                 scores[i].text = msg[i].Score.ToString();
@@ -29,7 +34,7 @@ public class Leaderboard : MonoBehaviour{
 
         LeaderboardCreator.UploadNewEntry(publicLeaderboardKey,
             userName, score, ((msg) => {
-                userName.Substring(0, 8);
+                //userName.Substring(0, 8);
                 GetLeaderboard();
             }));
     }
