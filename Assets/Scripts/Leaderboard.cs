@@ -22,19 +22,18 @@ public class Leaderboard : MonoBehaviour{
 
             int loopLenght = (msg.Length < names.Count) ? msg.Length : names.Count;
             //assign data to the ones on the Names and Score List
-            for (int i = 0; i < loopLenght; i++)
-            {
+            for (int i = 0; i < loopLenght; ++i){
+
                 names[i].text = msg[i].Username;
                 scores[i].text = msg[i].Score.ToString();
             }
         }));
     }
 
-    public void SetLeaderboardEntry(string userName, int score){
+    public void SetLeaderboardEntry(string username, int score){
 
         LeaderboardCreator.UploadNewEntry(publicLeaderboardKey,
-            userName, score, ((msg) => {
-                //userName.Substring(0, 8);
+            username, score, ((msg) => {
                 GetLeaderboard();
             }));
     }
